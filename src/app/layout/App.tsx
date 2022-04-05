@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react'
+import { Product } from './product'
 
 function App() {
-  const [products, setProducts] = useState([
-    { id: 1, name: 'product1', price: 100.0 },
-    { id: 2, name: 'product2', price: 100.0 },
-  ])
+  const [products, setProducts] = useState<Product[]>([])
 
   useEffect(() => {
     fetch('http://localhost:5000/api/products')
@@ -13,13 +11,17 @@ function App() {
   }, [])
 
   function addProduct() {
-    // setProducts([...products, { name: 'product3', price: 300.0 }])
     setProducts((prevState) => [
       ...prevState,
       {
         id: prevState.length + 1,
         name: 'product' + (prevState.length + 1),
-        price: Math.random() * 1000,
+        description: 'description' + (prevState.length + 1),
+        price: Math.floor(Math.random() * 1000),
+        pictureUrl: 'https://picsum.photos/200',
+        brand: 'brand ' + (prevState.length + 1),
+        // type: 'type ' + (prevState.length + 1),
+        // quantityInStock: Math.floor(Math.random() * 100),
       },
     ])
   }
