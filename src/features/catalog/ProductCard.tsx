@@ -32,8 +32,8 @@ export default function ProductCard({ product }: Props) {
         <CardMedia
           component="img"
           height="140"
-          // width="50"
-          sx={{ width: 'auto', backgroundSize: 'contain', bgcolor: 'primary.light' }}
+          // https://www.smashingmagazine.com/2021/10/object-fit-background-size-css/
+          sx={{ objectFit: 'contain', bgcolor: 'primary.light' }}
           image={product.pictureUrl}
           title={product.name}
         />
