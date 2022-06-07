@@ -22,7 +22,7 @@ export default function ProductDetails() {
     if (id) {
       agent.Catalog.details(+id)
         .then((res) => setProduct(res))
-        .catch((err) => console.log(err.response))
+        .catch((err) => console.log(err)) // err.response
         .finally(() => setLoading(false))
     }
   })
