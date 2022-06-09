@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
+import { toast } from 'react-toastify'
 
 axios.defaults.baseURL = 'http://localhost:5000/api/'
 
@@ -10,6 +11,30 @@ axios.interceptors.response.use(
   },
   (error: AxiosError) => {
     console.log('🪓 Caught by AXIOS interceptor')
+    // const {data, status} = error.response!
+    const {status} = error.response!
+
+    switch (status) {
+      case 400:
+        toast.error('🔴 Bad request. Please try again.')
+        break
+
+      case 401:
+        toast.error('🔴 401 You are not authorized to perform this action. ')
+        break
+
+      case 404:
+        toast.error('🔴 404 Not Found.')
+        break
+
+      case 500:
+          toast.error('🔴 500 Internal Server Error. Caught by AXIOS intercept')
+          break
+
+      default:
+        break
+    }
+
     return Promise.reject(error.response)
   },
 )
