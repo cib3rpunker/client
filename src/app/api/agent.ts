@@ -11,12 +11,29 @@ axios.interceptors.response.use(
   },
   (error: AxiosError) => {
     console.log('🪓 Caught by AXIOS interceptor')
-    // const {data, status} = error.response!
+    // const {data0} = error.response!
+    const data = error.response?.data as unknown || {}
     const {status} = error.response!
 
     switch (status) {
       case 400:
-        toast.error('🔴 Bad request. Please try again.')
+        // @ts-ignore
+        if(data.errors){
+          const modelStateErrors: string[] = []
+          // @ts-ignore
+          for (const key in data.errors) {
+            // @ts-ignore
+            if (data.errors.hasOwnProperty(key)) {
+              // @ts-ignore
+              modelStateErrors.push(data.errors[key])
+            }
+          }
+          // toast.error(modelStateErrors.join('\n'))
+          throw modelStateErrors.flat()
+        }
+
+        // toast.error(data ? data.title : 'Bad request')
+        toast.error('🔥 Bad request')
         break
 
       case 401:
