@@ -25,7 +25,7 @@ export default function ProductDetails() {
         .catch((err) => console.log(err)) // err.response
         .finally(() => setLoading(false))
     }
-  })
+  }, [id])
 
   if (loading) {
     return <h3>Loading...</h3>
