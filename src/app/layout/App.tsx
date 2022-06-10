@@ -5,7 +5,8 @@ import {
   ThemeProvider,
 } from '@mui/material'
 import { useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, /* Routes */ } from 'react-router-dom'
+// import { Route, Switch } from "react-router";
 import { ToastContainer } from 'react-toastify'
 import AboutPage from '../../features/about/AboutPage'
 import Catalog from '../../features/catalog/Catalog'
@@ -14,6 +15,7 @@ import ContactPage from '../../features/contact/ContactPage'
 import HomePage from '../../features/home/HomePage'
 import Header from './Header'
 import 'react-toastify/dist/ReactToastify.css'
+import ServerError from '../errors/ServerError'
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
@@ -37,15 +39,25 @@ function App() {
       <ToastContainer position="bottom-right" theme='colored'/>
       <CssBaseline />
       <Header darkMode={darkMode} handleThemeChange={handleThemeChange} />
-      <Container>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/catalog" element={<Catalog />} />
-          <Route path="/catalog/:id" element={<ProductDetails />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-        </Routes>
-      </Container>
+      <Route exact path='/' component={HomePage} />
+      <Route path={'/(.+)'} render={() => (
+        <Container  sx={{ mt: 4 }}>
+          {/* <Switch> */}
+            <Route exact path='/catalog' component={Catalog} />
+            <Route path='/catalog/:id' component={ProductDetails} />
+            <Route path='/about' component={AboutPage} />
+            <Route path='/contact' component={ContactPage} />
+            <Route path='/server-error' component={ServerError} />
+            {/* <Route path='/basket' component={BasketPage} /> */}
+            {/* <PrivateRoute path='/checkout' component={CheckoutWrapper} /> */}
+            {/* <PrivateRoute path='/orders' component={Orders} /> */}
+            {/* <PrivateRoute roles={['Admin']} path='/inventory' component={Inventory} /> */}
+            {/* <Route path='/login' component={Login} /> */}
+            {/* <Route path='/register' component={Register} /> */}
+            {/* <Route component={NotFound} /> */}
+          {/* </Switch> */}
+        </Container>
+      )} />
     </ThemeProvider>
   )
 }

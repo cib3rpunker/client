@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
+import { history } from '../..'   // index.tsx
 
 axios.defaults.baseURL = 'http://localhost:5000/api/'
 
@@ -12,13 +13,13 @@ axios.interceptors.response.use(
   (error: AxiosError) => {
     console.log('🪓 Caught by AXIOS interceptor')
     // const {data0} = error.response!
-    const data = error.response?.data as unknown || {}
-    const {status} = error.response!
+    const data = (error.response?.data as unknown) || {}
+    const { status } = error.response!
 
     switch (status) {
       case 400:
         // @ts-ignore
-        if(data.errors){
+        if (data.errors) {
           const modelStateErrors: string[] = []
           // @ts-ignore
           for (const key in data.errors) {
@@ -45,8 +46,11 @@ axios.interceptors.response.use(
         break
 
       case 500:
-          toast.error('🔴 500 Internal Server Error. Caught by AXIOS intercept')
-          break
+        history.push({
+          pathname: '/server-error',
+          state: { error: {status: 500, title: '🟥 This is a server error', details: 'EMPTY'} }
+        })
+        break
 
       default:
         break
