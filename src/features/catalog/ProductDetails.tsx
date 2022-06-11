@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import agent from '../../app/api/agent'
+import NotFound from '../../app/errors/NotFound'
 import { Product } from '../../app/models/product'
 
 export default function ProductDetails() {
@@ -32,7 +33,7 @@ export default function ProductDetails() {
   }
 
   if (!product) {
-    return <h3>Product not found</h3>
+    return <NotFound/>
   }
 
   return (

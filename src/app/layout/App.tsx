@@ -5,7 +5,7 @@ import {
   ThemeProvider,
 } from '@mui/material'
 import { useState } from 'react'
-import { Route, /* Routes */ } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 // import { Route, Switch } from "react-router";
 import { ToastContainer } from 'react-toastify'
 import AboutPage from '../../features/about/AboutPage'
@@ -16,6 +16,7 @@ import HomePage from '../../features/home/HomePage'
 import Header from './Header'
 import 'react-toastify/dist/ReactToastify.css'
 import ServerError from '../errors/ServerError'
+import NotFound from '../errors/NotFound'
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
@@ -42,20 +43,20 @@ function App() {
       <Route exact path='/' component={HomePage} />
       <Route path={'/(.+)'} render={() => (
         <Container  sx={{ mt: 4 }}>
-          {/* <Switch> */}
+          <Switch>
             <Route exact path='/catalog' component={Catalog} />
             <Route path='/catalog/:id' component={ProductDetails} />
             <Route path='/about' component={AboutPage} />
             <Route path='/contact' component={ContactPage} />
             <Route path='/server-error' component={ServerError} />
+            <Route component={NotFound} />
             {/* <Route path='/basket' component={BasketPage} /> */}
             {/* <PrivateRoute path='/checkout' component={CheckoutWrapper} /> */}
             {/* <PrivateRoute path='/orders' component={Orders} /> */}
             {/* <PrivateRoute roles={['Admin']} path='/inventory' component={Inventory} /> */}
             {/* <Route path='/login' component={Login} /> */}
             {/* <Route path='/register' component={Register} /> */}
-            {/* <Route component={NotFound} /> */}
-          {/* </Switch> */}
+          </Switch>
         </Container>
       )} />
     </ThemeProvider>
