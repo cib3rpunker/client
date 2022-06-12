@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import agent from '../../app/api/agent'
 import NotFound from '../../app/errors/NotFound'
+import LoadingComponent from '../../app/layout/LoadingComponent'
 import { Product } from '../../app/models/product'
 
 export default function ProductDetails() {
@@ -29,7 +30,7 @@ export default function ProductDetails() {
   }, [id])
 
   if (loading) {
-    return <h3>Loading...</h3>
+    return <LoadingComponent message="Loading Product ..." />
   }
 
   if (!product) {
